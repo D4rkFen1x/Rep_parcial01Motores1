@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Mov_Camara.cs" />
+    <Compile Include="Assets\Scripts\Mov_PJ.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
