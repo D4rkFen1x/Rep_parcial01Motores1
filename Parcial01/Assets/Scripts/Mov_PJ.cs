@@ -8,12 +8,16 @@ public class Mov_PJ : MonoBehaviour
     public float fuerzaSalto = 5.0f;
     private bool enSuelo = true;
 
+    public int maxSaltos = 2;
+    private int saltosRestantes;
+
     private Rigidbody rb;
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         rb = GetComponent<Rigidbody>();
+        saltosRestantes = maxSaltos;
     }
     void Update()
     {
@@ -25,10 +29,11 @@ public class Mov_PJ : MonoBehaviour
 
         transform.Translate(movimientoCostados, 0, movimientoAdelanteAtras);
 
-        // Saltar con espacio si está en el suelo
-        if (Input.GetKeyDown(KeyCode.Space) && enSuelo)
+        if (Input.GetKeyDown(KeyCode.Space) && saltosRestantes > 0)
         {
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             rb.AddForce(Vector3.up * fuerzaSalto, ForceMode.Impulse);
+            saltosRestantes--;
         }
 
         if (Input.GetKeyDown("escape"))
@@ -41,15 +46,7 @@ public class Mov_PJ : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            enSuelo = true;
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            enSuelo = false;
+            saltosRestantes = maxSaltos;
         }
     }
 }
